@@ -1,7 +1,13 @@
+import AnimatedDataPipeline from "./AnimatedDataPipeline";
+
 export default function Hero() {
   return (
-    <section className="grid md:grid-cols-2 gap-16 items-center min-h-[80vh]">
-      <div>
+    <section className="relative grid min-h-[80vh] items-center gap-16 overflow-hidden md:grid-cols-2">
+      <AnimatedDataPipeline />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(5,7,13,0.94)_0%,rgba(5,7,13,0.84)_30%,rgba(5,7,13,0.54)_58%,rgba(5,7,13,0.76)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_35%,rgba(124,58,237,0.16),transparent_32%),radial-gradient(circle_at_78%_42%,rgba(34,211,238,0.12),transparent_28%)]" />
+
+      <div className="relative z-10">
         <p className="text-sm text-purple-400 mb-4">BACKEND ENGINEER</p>
 
         <h1 className="text-5xl md:text-6xl font-bold leading-tight">
@@ -26,11 +32,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="border border-purple-900/60 rounded-3xl p-8 bg-white/5">
+      <div className="relative z-10 border border-purple-900/60 rounded-3xl p-8 bg-[#070a13]/70 shadow-2xl shadow-purple-950/30 backdrop-blur-sm">
         <div className="text-center text-purple-300 mb-6">SYSTEM ARCHITECTURE</div>
         <div className="grid grid-cols-2 gap-4">
           {["API Layer", "AI Agent", "MCP Server", "Database"].map((item) => (
-            <div key={item} className="border border-gray-700 rounded-2xl p-5">
+            <div key={item} className="border border-gray-700 rounded-2xl p-5 bg-black/10">
               <h3 className="font-semibold">{item}</h3>
               <p className="text-sm text-gray-400 mt-2">Connected module</p>
             </div>
