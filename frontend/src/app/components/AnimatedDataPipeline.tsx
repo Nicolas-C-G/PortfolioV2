@@ -11,7 +11,7 @@ type Particle = {
   color: string;
 };
 
-const COLORS = ["#22d3ee", "#38bdf8", "#8b5cf6", "#d946ef", "#facc15"];
+const COLORS = ["#A8D5BA", "#D0F4DE", "#FDE2E4", "#8FBFA2", "#E8F7ED"];
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
@@ -67,7 +67,7 @@ function glowLine(
   const phase = Math.sin(elapsed * 0.00045 + index * 0.8);
   const startX = width * (0.28 + phase * 0.02);
   const endX = width * 0.74;
-  const color = index % 3 === 0 ? "#d946ef" : "#22d3ee";
+  const color = index % 3 === 0 ? "#FDE2E4" : "#A8D5BA";
 
   context.save();
   context.beginPath();
@@ -166,9 +166,9 @@ export default function AnimatedDataPipeline() {
     const drawReflection = (elapsed: number) => {
       const baseY = height * 0.82;
       const reflection = context.createLinearGradient(0, baseY, 0, height);
-      reflection.addColorStop(0, "rgba(34, 211, 238, 0.14)");
-      reflection.addColorStop(0.42, "rgba(168, 85, 247, 0.09)");
-      reflection.addColorStop(1, "rgba(5, 7, 13, 0)");
+      reflection.addColorStop(0, "rgba(168, 213, 186, 0.14)");
+      reflection.addColorStop(0.42, "rgba(208, 244, 222, 0.08)");
+      reflection.addColorStop(1, "rgba(2, 6, 23, 0)");
       context.fillStyle = reflection;
       context.fillRect(0, baseY, width, height - baseY);
 
@@ -194,8 +194,8 @@ export default function AnimatedDataPipeline() {
       context.clearRect(0, 0, width, height);
 
       const backdrop = context.createLinearGradient(0, 0, width, height);
-      backdrop.addColorStop(0, "rgba(2, 6, 23, 0.8)");
-      backdrop.addColorStop(0.52, "rgba(8, 15, 38, 0.54)");
+      backdrop.addColorStop(0, "rgba(2, 6, 23, 0.84)");
+      backdrop.addColorStop(0.52, "rgba(18, 35, 26, 0.54)");
       backdrop.addColorStop(1, "rgba(2, 6, 23, 0.9)");
       context.fillStyle = backdrop;
       context.fillRect(0, 0, width, height);
@@ -283,9 +283,9 @@ export default function AnimatedDataPipeline() {
         height * 0.42,
         width * 0.75,
       );
-      vignette.addColorStop(0, "rgba(5, 7, 13, 0)");
-      vignette.addColorStop(0.72, "rgba(5, 7, 13, 0.16)");
-      vignette.addColorStop(1, "rgba(5, 7, 13, 0.86)");
+      vignette.addColorStop(0, "rgba(2, 6, 23, 0)");
+      vignette.addColorStop(0.72, "rgba(2, 6, 23, 0.16)");
+      vignette.addColorStop(1, "rgba(2, 6, 23, 0.86)");
       context.fillStyle = vignette;
       context.fillRect(0, 0, width, height);
 
