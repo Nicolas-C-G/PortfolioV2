@@ -58,7 +58,7 @@ function MetricCard({ label, value, unit, tone, chart }: MetricCardProps) {
 
   return (
     <div
-      className="w-36 rounded-lg border border-[rgba(168,213,186,0.35)] bg-[rgba(15,23,42,0.75)] p-3 text-left shadow-[0_18px_46px_rgba(168,213,186,0.18)] backdrop-blur-md"
+      className="w-36 rounded-lg border border-[rgba(168,213,186,0.25)] bg-[rgba(15,23,42,0.55)] p-3 text-left shadow-[0_18px_42px_rgba(15,23,42,0.22)] backdrop-blur-[12px]"
     >
       <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[rgba(203,213,225,0.75)]">
         {label}
@@ -103,8 +103,8 @@ function MetricCard({ label, value, unit, tone, chart }: MetricCardProps) {
                   style={{
                     height,
                     backgroundColor: color,
-                    opacity: 0.35 + index * 0.045,
-                    boxShadow: `0 0 10px rgba(168, 213, 186, 0.22)`,
+                    opacity: 0.28 + index * 0.035,
+                    boxShadow: `0 8px 18px rgba(168, 213, 186, 0.16)`,
                   }}
                 />
               ),
@@ -120,8 +120,8 @@ function StageIcon({ icon }: { icon: PipelineStageProps["icon"] }) {
   if (icon === "process") {
     return (
       <div className="relative h-9 w-9">
-        <span className="absolute left-1/2 top-1 h-5 w-5 -translate-x-1/2 rotate-45 border-2 border-[var(--living-sage)] shadow-[0_0_16px_rgba(168,213,186,0.38)]" />
-        <span className="absolute left-1/2 top-3.5 h-5 w-5 -translate-x-1/2 rotate-45 border-2 border-[rgba(168,213,186,0.7)] shadow-[0_0_16px_rgba(168,213,186,0.26)]" />
+        <span className="absolute left-1/2 top-1 h-5 w-5 -translate-x-1/2 rotate-45 border-2 border-[var(--living-sage)] shadow-[0_0_14px_rgba(168,213,186,0.28)]" />
+        <span className="absolute left-1/2 top-3.5 h-5 w-5 -translate-x-1/2 rotate-45 border-2 border-[rgba(168,213,186,0.62)] shadow-[0_0_14px_rgba(168,213,186,0.2)]" />
       </div>
     );
   }
@@ -132,7 +132,7 @@ function StageIcon({ icon }: { icon: PipelineStageProps["icon"] }) {
         {[15, 24, 32].map((height) => (
           <span
             key={height}
-            className="w-2 rounded-sm border border-[var(--living-coral)] bg-[rgba(253,226,228,0.12)] shadow-[0_0_14px_rgba(253,226,228,0.32)]"
+            className="w-2 rounded-sm border border-[var(--living-coral)] bg-[rgba(253,226,228,0.1)] shadow-[0_0_12px_rgba(253,226,228,0.22)]"
             style={{ height }}
           />
         ))}
@@ -145,7 +145,7 @@ function StageIcon({ icon }: { icon: PipelineStageProps["icon"] }) {
       {Array.from({ length: 9 }, (_, index) => (
         <span
           key={index}
-          className="border border-[var(--living-mint)] shadow-[0_0_12px_rgba(208,244,222,0.3)]"
+          className="border border-[var(--living-mint)] shadow-[0_0_10px_rgba(208,244,222,0.2)]"
         />
       ))}
     </div>
@@ -155,7 +155,7 @@ function StageIcon({ icon }: { icon: PipelineStageProps["icon"] }) {
 function PipelineStage({ label, title, subtitle, icon }: PipelineStageProps) {
   return (
     <div className="flex min-w-0 flex-col items-center text-center">
-      <span className="mb-4 h-px w-px bg-[var(--living-sage)] shadow-[0_0_16px_3px_rgba(168,213,186,0.35)]" />
+      <span className="mb-4 h-px w-px bg-[var(--living-sage)] shadow-[0_0_14px_2px_rgba(168,213,186,0.25)]" />
       <StageIcon icon={icon} />
       <p className="mt-4 text-sm font-medium uppercase tracking-[0.22em] text-[var(--living-text)]">
         {label}
@@ -168,12 +168,13 @@ function PipelineStage({ label, title, subtitle, icon }: PipelineStageProps) {
 
 export default function Hero() {
   return (
-    <section className="relative isolate min-h-screen w-full overflow-hidden">
+    <section className="relative isolate min-h-screen w-full overflow-hidden bg-[radial-gradient(circle_at_30%_20%,#6B8F95_0%,#4A6F73_40%,#2F4F54_70%,#1E3A3F_100%)] [background-blend-mode:overlay]">
       <div className="absolute inset-0 z-0">
         <AnimatedDataPipeline />
       </div>
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(15,23,42,0.9)_24%,rgba(18,35,26,0.34)_48%,rgba(22,37,30,0.28)_72%,rgba(2,6,23,0.88)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_36%,rgba(168,213,186,0.13),transparent_25%),radial-gradient(circle_at_58%_34%,rgba(208,244,222,0.1),transparent_32%),radial-gradient(circle_at_70%_72%,rgba(253,226,228,0.08),transparent_30%),linear-gradient(180deg,rgba(2,6,23,0.08)_0%,transparent_44%,rgba(2,6,23,0.98)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(30,58,63,0.72)_0%,rgba(47,79,84,0.46)_26%,rgba(74,111,115,0.16)_52%,rgba(74,111,115,0.12)_72%,rgba(30,58,63,0.42)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_24%_30%,rgba(208,244,222,0.1),transparent_30%),radial-gradient(circle_at_58%_34%,rgba(168,213,186,0.1),transparent_34%),radial-gradient(circle_at_72%_72%,rgba(253,226,228,0.055),transparent_32%),linear-gradient(180deg,rgba(248,250,252,0.05)_0%,transparent_46%,rgba(30,58,63,0.62)_100%)] mix-blend-overlay" />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.045] mix-blend-overlay [background-image:radial-gradient(rgba(248,250,252,0.45)_0.5px,transparent_0.8px)] [background-size:3px_3px]" />
 
       <div className="relative z-10 flex min-h-screen flex-col px-6 py-10 md:px-10 md:py-14 lg:px-16 xl:px-20">
         <div className="grid flex-1 items-center gap-8 pt-6 lg:grid-cols-[minmax(320px,34vw)_minmax(280px,1fr)_minmax(144px,10vw)] xl:grid-cols-[minmax(380px,32vw)_minmax(420px,1fr)_160px]">
@@ -183,7 +184,7 @@ export default function Hero() {
             </p>
 
             <h1 className="text-5xl font-black leading-[0.95] tracking-normal text-[var(--living-text)] sm:text-6xl md:text-7xl xl:text-8xl">
-              <span className="bg-gradient-to-r from-[var(--living-sage)] via-[var(--living-mint)] to-[var(--living-coral)] bg-clip-text text-transparent drop-shadow-[0_10px_34px_rgba(168,213,186,0.16)]">
+              <span className="bg-gradient-to-r from-[rgba(168,213,186,0.92)] via-[rgba(208,244,222,0.9)] to-[rgba(253,226,228,0.88)] bg-clip-text text-transparent drop-shadow-[0_10px_30px_rgba(168,213,186,0.12)]">
                 AI-Powered
               </span>{" "}
               Data Systems
@@ -195,10 +196,10 @@ export default function Hero() {
             </p>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <button className="rounded-lg border border-[var(--living-mint)] bg-gradient-to-r from-[var(--living-sage)] to-[var(--living-mint)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--living-dark-text)] shadow-[0_14px_30px_rgba(168,213,186,0.2)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(168,213,186,0.28)] motion-reduce:hover:translate-y-0 sm:px-7 sm:tracking-[0.24em]">
+              <button className="rounded-lg border border-[rgba(208,244,222,0.7)] bg-[var(--living-sage)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--living-dark-text)] shadow-[0_10px_30px_rgba(168,213,186,0.25)] transition hover:-translate-y-0.5 hover:bg-[rgba(208,244,222,0.95)] hover:shadow-[0_14px_34px_rgba(168,213,186,0.28)] motion-reduce:hover:translate-y-0 sm:px-7 sm:tracking-[0.24em]">
                 View My Projects
               </button>
-              <button className="rounded-lg border border-[rgba(208,244,222,0.45)] bg-[rgba(15,23,42,0.42)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--living-mint)] shadow-[0_12px_28px_rgba(2,6,23,0.24)] transition hover:-translate-y-0.5 hover:border-[rgba(208,244,222,0.7)] hover:bg-[rgba(208,244,222,0.08)] hover:shadow-[0_18px_34px_rgba(168,213,186,0.16)] motion-reduce:hover:translate-y-0 sm:px-7 sm:tracking-[0.2em]">
+              <button className="rounded-lg border border-[rgba(208,244,222,0.4)] bg-[rgba(15,23,42,0.3)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--living-mint)] shadow-[0_10px_26px_rgba(15,23,42,0.18)] backdrop-blur-[12px] transition hover:-translate-y-0.5 hover:border-[rgba(208,244,222,0.58)] hover:bg-[rgba(208,244,222,0.07)] hover:shadow-[0_14px_32px_rgba(15,23,42,0.2)] motion-reduce:hover:translate-y-0 sm:px-7 sm:tracking-[0.2em]">
                 See Architecture
               </button>
             </div>
@@ -215,9 +216,9 @@ export default function Hero() {
 
         <div className="relative mt-8 hidden grid-cols-[1fr_10rem_1fr_10rem_1fr] items-start gap-4 pb-2 md:grid xl:mt-10">
           <PipelineStage {...stages[0]} />
-          <div className="mt-[4.55rem] h-px border-t border-dotted border-[rgba(208,244,222,0.58)]" />
+          <div className="mt-[4.55rem] h-px border-t border-dotted border-[rgba(208,244,222,0.38)]" />
           <PipelineStage {...stages[1]} />
-          <div className="mt-[4.55rem] h-px border-t border-dotted border-[rgba(208,244,222,0.58)]" />
+          <div className="mt-[4.55rem] h-px border-t border-dotted border-[rgba(208,244,222,0.38)]" />
           <PipelineStage {...stages[2]} />
         </div>
 

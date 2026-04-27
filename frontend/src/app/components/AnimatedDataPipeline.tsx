@@ -28,7 +28,7 @@ const createParticles = (count: number): Particle[] =>
     row: index % 30,
     column: Math.floor(index / 30) % 34,
     speed: 0.72 + ((index * 19) % 29) * 0.018,
-    size: 2.2 + (index % 4) * 0.9,
+    size: 1.7 + (index % 4) * 0.65,
     color: COLORS[index % COLORS.length],
   }));
 
@@ -43,8 +43,8 @@ function square(
 ) {
   context.save();
   context.globalAlpha = alpha;
-  context.shadowColor = color;
-  context.shadowBlur = size * 3.6;
+  context.shadowColor = "rgba(168, 213, 186, 0.25)";
+  context.shadowBlur = size * 2.2;
   if (outline) {
     context.strokeStyle = color;
     context.lineWidth = 1;
@@ -81,17 +81,17 @@ function glowLine(
     y + Math.cos(elapsed * 0.0005 + index) * 8,
   );
   context.strokeStyle = color;
-  context.globalAlpha = 0.1 + (index % 4) * 0.025;
+  context.globalAlpha = 0.055 + (index % 4) * 0.018;
   context.lineWidth = index % 5 === 0 ? 1.6 : 0.9;
-  context.shadowColor = color;
-  context.shadowBlur = 14;
+  context.shadowColor = "rgba(168, 213, 186, 0.25)";
+  context.shadowBlur = 10;
   context.stroke();
 
   const pulse = (elapsed * 0.00018 + index * 0.07) % 1;
   const pulseX = lerp(startX, endX, pulse);
   const pulseY =
     y + Math.sin(pulse * Math.PI * 2 + index) * height * 0.075 + phase * 8;
-  square(context, pulseX, pulseY, 3.2, color, 0.7);
+  square(context, pulseX, pulseY, 2.4, color, 0.36);
   context.restore();
 }
 
@@ -116,8 +116,8 @@ export default function AnimatedDataPipeline() {
     const particleCount = reducedMotion
       ? 95
       : smallScreen || lowPower
-        ? 135
-        : 275;
+        ? 110
+        : 220;
     const particles = createParticles(particleCount);
     const startTime = performance.now();
     let animationFrame = 0;
@@ -148,7 +148,7 @@ export default function AnimatedDataPipeline() {
       for (let row = 0; row < rows; row += 1) {
         for (let column = 0; column < columns; column += 1) {
           const color = COLORS[(row * 5 + column * 3) % COLORS.length];
-          const flicker = Math.sin(elapsed * 0.0011 + row * 0.7 + column) * 0.1;
+          const flicker = Math.sin(elapsed * 0.0011 + row * 0.7 + column) * 0.06;
           const outline = (row + column) % 4 === 0;
           square(
             context,
@@ -166,9 +166,9 @@ export default function AnimatedDataPipeline() {
     const drawReflection = (elapsed: number) => {
       const baseY = height * 0.82;
       const reflection = context.createLinearGradient(0, baseY, 0, height);
-      reflection.addColorStop(0, "rgba(168, 213, 186, 0.14)");
-      reflection.addColorStop(0.42, "rgba(208, 244, 222, 0.08)");
-      reflection.addColorStop(1, "rgba(2, 6, 23, 0)");
+      reflection.addColorStop(0, "rgba(168, 213, 186, 0.08)");
+      reflection.addColorStop(0.42, "rgba(208, 244, 222, 0.05)");
+      reflection.addColorStop(1, "rgba(30, 58, 63, 0)");
       context.fillStyle = reflection;
       context.fillRect(0, baseY, width, height - baseY);
 
@@ -177,10 +177,10 @@ export default function AnimatedDataPipeline() {
         const length = height * (0.04 + ((index * 7) % 15) / 120);
         const color = COLORS[index % COLORS.length];
         context.save();
-        context.globalAlpha = 0.08 + Math.sin(elapsed * 0.001 + index) * 0.025;
+        context.globalAlpha = 0.045 + Math.sin(elapsed * 0.001 + index) * 0.015;
         context.strokeStyle = color;
-        context.shadowColor = color;
-        context.shadowBlur = 20;
+        context.shadowColor = "rgba(168, 213, 186, 0.25)";
+        context.shadowBlur = 12;
         context.beginPath();
         context.moveTo(x, baseY + 8);
         context.lineTo(x + Math.sin(index) * 6, baseY + length);
@@ -194,14 +194,14 @@ export default function AnimatedDataPipeline() {
       context.clearRect(0, 0, width, height);
 
       const backdrop = context.createLinearGradient(0, 0, width, height);
-      backdrop.addColorStop(0, "rgba(2, 6, 23, 0.84)");
-      backdrop.addColorStop(0.52, "rgba(18, 35, 26, 0.54)");
-      backdrop.addColorStop(1, "rgba(2, 6, 23, 0.9)");
+      backdrop.addColorStop(0, "rgba(107, 143, 149, 0.18)");
+      backdrop.addColorStop(0.52, "rgba(74, 111, 115, 0.16)");
+      backdrop.addColorStop(1, "rgba(30, 58, 63, 0.24)");
       context.fillStyle = backdrop;
       context.fillRect(0, 0, width, height);
 
       context.save();
-      context.globalCompositeOperation = "lighter";
+      context.globalCompositeOperation = "screen";
 
       const centerCell = smallScreen ? 4.5 : 5.8;
       drawGrid(
@@ -211,7 +211,7 @@ export default function AnimatedDataPipeline() {
         smallScreen ? 18 : 31,
         centerCell,
         centerCell * 2.05,
-        smallScreen ? 0.12 : 0.16,
+        smallScreen ? 0.08 : 0.12,
         elapsed,
       );
 
@@ -223,7 +223,7 @@ export default function AnimatedDataPipeline() {
         smallScreen ? 20 : 32,
         rightCell,
         rightCell * 1.95,
-        smallScreen ? 0.42 : 0.48,
+        smallScreen ? 0.32 : 0.38,
         elapsed,
       );
 
@@ -267,7 +267,7 @@ export default function AnimatedDataPipeline() {
           y,
           particle.size,
           particle.color,
-          alpha * (settle > 0.7 ? 0.52 : 0.9),
+          alpha * (settle > 0.7 ? 0.36 : 0.62),
           outline,
         );
       });
@@ -283,9 +283,9 @@ export default function AnimatedDataPipeline() {
         height * 0.42,
         width * 0.75,
       );
-      vignette.addColorStop(0, "rgba(2, 6, 23, 0)");
-      vignette.addColorStop(0.72, "rgba(2, 6, 23, 0.16)");
-      vignette.addColorStop(1, "rgba(2, 6, 23, 0.86)");
+      vignette.addColorStop(0, "rgba(30, 58, 63, 0)");
+      vignette.addColorStop(0.72, "rgba(30, 58, 63, 0.08)");
+      vignette.addColorStop(1, "rgba(30, 58, 63, 0.42)");
       context.fillStyle = vignette;
       context.fillRect(0, 0, width, height);
 
@@ -309,7 +309,7 @@ export default function AnimatedDataPipeline() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 h-full w-full opacity-95"
+      className="pointer-events-none absolute inset-0 h-full w-full opacity-80"
     />
   );
 }
