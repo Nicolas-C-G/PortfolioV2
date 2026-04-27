@@ -63,19 +63,19 @@ function glowLine(
   index: number,
   elapsed: number,
 ) {
-  const y = height * (0.26 + index * 0.033);
+  const y = height * (0.22 + index * 0.032);
   const phase = Math.sin(elapsed * 0.00045 + index * 0.8);
-  const startX = width * (0.2 + phase * 0.018);
-  const endX = width * 0.68;
+  const startX = width * (0.28 + phase * 0.02);
+  const endX = width * 0.74;
   const color = index % 3 === 0 ? "#d946ef" : "#22d3ee";
 
   context.save();
   context.beginPath();
   context.moveTo(startX, y + phase * 18);
   context.bezierCurveTo(
-    width * 0.35,
+    width * 0.42,
     y - height * (0.11 + index * 0.002),
-    width * 0.47,
+    width * 0.54,
     y + height * (0.13 - index * 0.002),
     endX,
     y + Math.cos(elapsed * 0.0005 + index) * 8,
@@ -117,7 +117,7 @@ export default function AnimatedDataPipeline() {
       ? 95
       : smallScreen || lowPower
         ? 135
-        : 245;
+        : 275;
     const particles = createParticles(particleCount);
     const startTime = performance.now();
     let animationFrame = 0;
@@ -203,27 +203,27 @@ export default function AnimatedDataPipeline() {
       context.save();
       context.globalCompositeOperation = "lighter";
 
-      const centerCell = smallScreen ? 4.5 : 5.6;
+      const centerCell = smallScreen ? 4.5 : 5.8;
       drawGrid(
-        width * (smallScreen ? 0.43 : 0.47),
-        height * 0.18,
+        width * (smallScreen ? 0.43 : 0.49),
+        height * 0.16,
         smallScreen ? 12 : 25,
-        smallScreen ? 18 : 29,
+        smallScreen ? 18 : 31,
         centerCell,
         centerCell * 2.05,
-        0.12,
+        smallScreen ? 0.12 : 0.16,
         elapsed,
       );
 
-      const rightCell = smallScreen ? 4.8 : 6.4;
+      const rightCell = smallScreen ? 4.8 : 6.2;
       drawGrid(
-        width * (smallScreen ? 0.62 : 0.71),
+        width * (smallScreen ? 0.62 : 0.73),
         height * 0.14,
         smallScreen ? 13 : 25,
-        smallScreen ? 20 : 31,
+        smallScreen ? 20 : 32,
         rightCell,
         rightCell * 1.95,
-        0.42,
+        smallScreen ? 0.42 : 0.48,
         elapsed,
       );
 
@@ -237,7 +237,7 @@ export default function AnimatedDataPipeline() {
         const drift =
           Math.sin(elapsed * 0.0012 + index * 1.7) * height * 0.028;
         const chaosX =
-          width * (0.08 + particle.seed * (smallScreen ? 0.25 : 0.31));
+          width * (0.1 + particle.seed * (smallScreen ? 0.25 : 0.27));
         const chaosY =
           height *
             (0.11 +
@@ -247,9 +247,9 @@ export default function AnimatedDataPipeline() {
         const gridRow = particle.row % (smallScreen ? 19 : 30);
         const gridColumn = particle.column % (smallScreen ? 17 : 32);
         const cell = smallScreen ? 4.8 : 6;
-        const centerX = width * (smallScreen ? 0.43 : 0.47) + gridColumn * cell * 2;
+        const centerX = width * (smallScreen ? 0.43 : 0.49) + gridColumn * cell * 2;
         const centerY = height * 0.17 + gridRow * cell * 1.92;
-        const finalX = width * (smallScreen ? 0.63 : 0.71) + gridColumn * cell * 1.9;
+        const finalX = width * (smallScreen ? 0.63 : 0.73) + gridColumn * cell * 1.9;
         const finalY = height * 0.14 + gridRow * cell * 1.9;
         const travelX = lerp(chaosX, width * 0.9, progress);
         const align = ease(clamp((progress - 0.26) / 0.34, 0, 1));

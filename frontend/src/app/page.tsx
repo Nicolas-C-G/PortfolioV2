@@ -12,9 +12,7 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 opacity-[0.13] [background-image:linear-gradient(rgba(34,211,238,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.18)_1px,transparent_1px)] [background-size:72px_72px]" />
 
       <div className="relative z-10">
-        <div className="mx-auto max-w-7xl px-6 py-8 md:px-10">
-          <Hero />
-        </div>
+        <Hero />
         <Architecture />
         <section className={`${sectionShell} grid gap-8 pb-24 md:grid-cols-2 md:gap-10`}>
           <FeaturedProject />
