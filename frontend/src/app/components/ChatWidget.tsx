@@ -22,22 +22,63 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const nextMessage = draft.trim();
-    if (!nextMessage) return;
+    const userInput = draft.trim();
+    if (!userInput || isLoading) return;
 
     setMessages((currentMessages) => [
       ...currentMessages,
       {
         id: Date.now(),
         author: "user",
-        text: nextMessage,
+        text: userInput,
       },
     ]);
     setDraft("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userInput }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Assistant request failed");
+      }
+
+      const data = await res.json();
+
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          id: Date.now() + 1,
+          author: "assistant",
+          text:
+            typeof data.answer === "string" && data.answer.trim()
+              ? data.answer
+              : "Sorry, I couldn't connect to the assistant right now.",
+        },
+      ]);
+    } catch {
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        {
+          id: Date.now() + 1,
+          author: "assistant",
+          text: "Sorry, I couldn't connect to the assistant right now.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -76,6 +117,11 @@ export default function ChatWidget() {
                 {message.text}
               </div>
             ))}
+            {isLoading && (
+              <div className="max-w-[90%] rounded-2xl border border-[rgba(208,244,222,0.16)] bg-[rgba(15,23,42,0.28)] px-3 py-2 text-[var(--living-muted)]">
+                Thinking...
+              </div>
+            )}
           </div>
 
           <form className="flex gap-2" onSubmit={handleSubmit}>
@@ -84,12 +130,14 @@ export default function ChatWidget() {
               placeholder="Ask anything..."
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
+              disabled={isLoading}
             />
             <button
               type="submit"
-              className="rounded-xl border border-[rgba(208,244,222,0.56)] bg-[var(--living-sage)] px-4 text-sm font-semibold text-[var(--living-dark-text)] shadow-[0_10px_24px_rgba(168,213,186,0.2)] transition hover:-translate-y-0.5 hover:bg-[rgba(208,244,222,0.95)] hover:shadow-[0_14px_30px_rgba(208,244,222,0.24)] motion-reduce:hover:translate-y-0"
+              disabled={isLoading || !draft.trim()}
+              className="rounded-xl border border-[rgba(208,244,222,0.56)] bg-[var(--living-sage)] px-4 text-sm font-semibold text-[var(--living-dark-text)] shadow-[0_10px_24px_rgba(168,213,186,0.2)] transition hover:-translate-y-0.5 hover:bg-[rgba(208,244,222,0.95)] hover:shadow-[0_14px_30px_rgba(208,244,222,0.24)] disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:hover:translate-y-0"
             >
-              Send
+              {isLoading ? "Sending" : "Send"}
             </button>
           </form>
         </div>
