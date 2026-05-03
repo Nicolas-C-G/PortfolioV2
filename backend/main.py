@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -37,6 +37,51 @@ app.add_middleware(
     allow_headers=CORS_HEADERS,
 )
 
+client = OpenAI(
+    api_key = os.getenv("NVIDIA_API_KEY", ""),
+    base_url= os.getenv("NVIDIA_BASE_URL", ""),
+)
+
+MODEL = os.getenv("NVIDIA_MODEL", "")
+
+class ChatRequest(BaseModel):
+    message: str
+
+class ChatResponse(BaseModel):
+    answer: str
+
 @app.get("/")
-def read_root():
-    return {"message": "Hello world"}
+def health_check():
+    return {"status": "ok"}
+
+@app.post("/chat", response_model=ChatResponse)
+def chat(req: ChatRequest):
+    try:
+        completion = client.chat.completions.create(
+            model=MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": """
+                        You are Nicolás Cartes' portfolio assistant.
+                        Answer questions about his experience, projects, backend skills,
+                        AI projects, infrastructure, and software engineering background.
+                        Be clear, concise, and professional.
+                    """,
+                },
+                {
+                    "role": "user",
+                    "content": req.message,
+                },
+            ],
+            temperature=0.3,
+            max_tokens=500,
+        )
+
+        return {
+            "answer": completion.choices[0].message.content
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
