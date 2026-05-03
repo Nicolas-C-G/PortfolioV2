@@ -104,10 +104,6 @@ export default function ChatWidget() {
       >
         <span
           aria-hidden="true"
-          className="ai-pet-ring absolute bottom-2 left-1/2 h-12 w-24 rounded-full border border-cyan-300/60"
-        />
-        <span
-          aria-hidden="true"
           className="ai-pet-particle-layer absolute inset-0 pointer-events-none"
         >
           <span className="ai-pet-particle" />
