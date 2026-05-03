@@ -98,16 +98,33 @@ export default function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen((currentOpen) => !currentOpen)}
-        className="relative ml-auto flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-none bg-transparent p-0 shadow-none ring-0 transition hover:-translate-y-0.5 hover:scale-105 motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 sm:h-24 sm:w-24"
+        className="relative ml-auto flex h-28 w-28 items-center justify-center border-none bg-transparent p-0 shadow-none ring-0 transition hover:-translate-y-0.5 hover:scale-105 motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100"
         aria-label={open ? "Close chat" : "Open chat"}
         aria-expanded={open}
       >
+        <span
+          aria-hidden="true"
+          className="ai-pet-ring absolute bottom-2 left-1/2 h-12 w-24 rounded-full border border-cyan-300/60"
+        />
+        <span
+          aria-hidden="true"
+          className="ai-pet-particle-layer absolute inset-0 pointer-events-none"
+        >
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+          <span className="ai-pet-particle" />
+        </span>
         <Image
-          src="/images/pet.png"
+          src="/images/ai-pet-transparent.png"
           alt=""
           width={96}
           height={96}
-          className="h-full w-full rounded-full object-cover"
+          className="relative z-10 h-20 w-20 select-none object-contain pointer-events-none"
           priority
         />
       </button>
